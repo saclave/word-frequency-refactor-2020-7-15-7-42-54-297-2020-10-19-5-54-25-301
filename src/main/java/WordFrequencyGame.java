@@ -5,6 +5,8 @@ import java.util.Map;
 import java.util.StringJoiner;
 
 public class WordFrequencyGame {
+    private List<WordFrequency> wordFrequencyList = new ArrayList<>();
+
     public String getResult(String inputStr){
 
         if (inputStr.split("\\s+").length==1) {
@@ -16,11 +18,7 @@ public class WordFrequencyGame {
                 //split the input string with 1 to n pieces of spaces
                 String[] words = inputStr.split("\\s+");
 
-                List<WordFrequency> wordFrequencyList = new ArrayList<>();
-                for (String word : words) {
-                    WordFrequency wordFrequency = new WordFrequency(word, 1);
-                    wordFrequencyList.add(wordFrequency);
-                }
+                wordFrequencyList = getWordFrequencyList(words);
 
                 //get the map for the next step of sizing the same word
                 Map<String, List<WordFrequency>> map =getListMap(wordFrequencyList);
@@ -44,6 +42,14 @@ public class WordFrequencyGame {
                 return "Calculate Error";
             }
         }
+    }
+
+    private List<WordFrequency> getWordFrequencyList(String[] words) {
+        for (String word : words) {
+            WordFrequency wordFrequency = new WordFrequency(word, 1);
+            wordFrequencyList.add(wordFrequency);
+        }
+        return wordFrequencyList;
     }
 
 
