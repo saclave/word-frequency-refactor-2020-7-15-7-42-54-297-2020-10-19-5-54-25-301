@@ -7,7 +7,6 @@ import java.util.StringJoiner;
 public class WordFrequencyGame {
     public String getResult(String inputStr){
 
-
         if (inputStr.split("\\s+").length==1) {
             return inputStr + " 1";
         } else {
@@ -42,8 +41,6 @@ public class WordFrequencyGame {
                 }
                 return joiner.toString();
             } catch (Exception e) {
-
-
                 return "Calculate Error";
             }
         }
@@ -51,22 +48,22 @@ public class WordFrequencyGame {
 
 
     private Map<String,List<WordFrequency>> getListMap(List<WordFrequency> wordFrequencyList) {
-        Map<String, List<WordFrequency>> map = new HashMap<>();
+        Map<String, List<WordFrequency>> wordFrequencyMap = new HashMap<>();
         for (WordFrequency wordFrequency : wordFrequencyList){
 //       map.computeIfAbsent(input.getValue(), k -> new ArrayList<>()).add(input);
-            if (!map.containsKey(wordFrequency.getWord())){
-                ArrayList arr = new ArrayList<>();
-                arr.add(wordFrequency);
-                map.put(wordFrequency.getWord(), arr);
+            if (!wordFrequencyMap.containsKey(wordFrequency.getWord())){
+                ArrayList wordList = new ArrayList<>();
+                wordList.add(wordFrequency);
+                wordFrequencyMap.put(wordFrequency.getWord(), wordList);
             }
 
             else {
-                map.get(wordFrequency.getWord()).add(wordFrequency);
+                wordFrequencyMap.get(wordFrequency.getWord()).add(wordFrequency);
             }
         }
 
 
-        return map;
+        return wordFrequencyMap;
     }
 
 
