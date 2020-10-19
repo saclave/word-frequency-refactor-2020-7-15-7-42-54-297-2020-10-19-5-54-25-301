@@ -6,6 +6,7 @@ import java.util.StringJoiner;
 
 public class WordFrequencyGame {
     private List<WordFrequency> wordFrequencyList = new ArrayList<>();
+    List<WordFrequency> distinctWordList = new ArrayList<>();
 
     public String getResult(String inputStr){
 
@@ -21,13 +22,10 @@ public class WordFrequencyGame {
                 wordFrequencyList = getWordFrequencyList(words);
 
                 //get the map for the next step of sizing the same word
-                Map<String, List<WordFrequency>> map =getListMap(wordFrequencyList);
+                Map<String, List<WordFrequency>> wordInfoMap =getListMap(wordFrequencyList);
 
-                List<WordFrequency> distinctWordList = new ArrayList<>();
-                for (Map.Entry<String, List<WordFrequency>> entry : map.entrySet()){
-                    WordFrequency wordFrequency = new WordFrequency(entry.getKey(), entry.getValue().size());
-                    distinctWordList.add(wordFrequency);
-                }
+                List<WordFrequency> distinctWordList = getDistinctWordList(wordInfoMap);
+
                 wordFrequencyList = distinctWordList;
 
                 wordFrequencyList.sort((firstWord, secondWord) -> secondWord.getWordCount() - firstWord.getWordCount());
@@ -42,6 +40,14 @@ public class WordFrequencyGame {
                 return "Calculate Error";
             }
         }
+    }
+
+    private List<WordFrequency> getDistinctWordList(Map<String, List<WordFrequency>> wordInfoMap) {
+        for (Map.Entry<String, List<WordFrequency>> entry : wordInfoMap.entrySet()){
+            WordFrequency wordFrequency = new WordFrequency(entry.getKey(), entry.getValue().size());
+            distinctWordList.add(wordFrequency);
+        }
+        return distinctWordList;
     }
 
     private List<WordFrequency> getWordFrequencyList(String[] words) {
