@@ -1,6 +1,7 @@
 import java.util.*;
 
 import static java.lang.String.format;
+import static java.util.Arrays.asList;
 import static java.util.Collections.frequency;
 import static java.util.stream.Collectors.joining;
 import static java.util.stream.Collectors.toList;
@@ -10,9 +11,13 @@ public class WordFrequencyGame {
 
     public String getResult(String inputStr){
             try {
-                List<WordInfo> wordInfoList = calculateWordFrequency(inputStr);
-                sortWordInfo(wordInfoList);
-                return joinWordInfoList(wordInfoList);
+                if ("".equals(inputStr)) {
+                    throw new RuntimeException();
+                }
+
+                List<WordInfo> wordFrequencyList = calculateWordFrequency(inputStr);
+                sortWordInfo(wordFrequencyList);
+                return joinWordInfoList(wordFrequencyList);
             } catch (Exception e) {
                 return "Calculate Error";
             }
@@ -30,10 +35,12 @@ public class WordFrequencyGame {
     }
 
     private List<WordInfo> calculateWordFrequency(String inputStr) {
-        String[] words = inputStr.split(WHITE_SPACES);
+        List<String> words = asList(inputStr.split(WHITE_SPACES));
+        HashSet<String> distinctWords = new HashSet<>(words);
 
-        return Arrays.asList(words).stream()
-                .map(word -> new WordInfo(word, frequency(Arrays.asList(words), word)))
+
+        return distinctWords.stream()
+                .map(word -> new WordInfo(word, frequency(asList(words), word)))
                 .collect(toList());
     }
 }
