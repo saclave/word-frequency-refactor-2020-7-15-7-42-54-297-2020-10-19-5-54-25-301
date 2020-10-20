@@ -7,17 +7,15 @@ import static java.util.stream.Collectors.joining;
 import static java.util.stream.Collectors.toList;
 
 public class WordFrequencyGame {
-    private static final String WHITE_SPACES = "\\s";
-
     public String getResult(String inputStr){
             try {
                 if ("".equals(inputStr)) {
                     throw new RuntimeException();
                 }
 
-                List<WordInfo> wordFrequencyList = calculateWordFrequency(inputStr);
-                sortWordInfo(wordFrequencyList);
-                return joinWordInfoList(wordFrequencyList);
+                List<WordInfo> wordInfoList = calculateWordFrequency(inputStr);
+                sortWordInfo(wordInfoList);
+                return joinWordInfoList(wordInfoList);
             } catch (Exception e) {
                 return "Calculate Error";
             }
@@ -35,12 +33,11 @@ public class WordFrequencyGame {
     }
 
     private List<WordInfo> calculateWordFrequency(String inputStr) {
-        List<String> words = asList(inputStr.split(WHITE_SPACES));
+        List<String> words = asList(inputStr.split("\\s"));
         HashSet<String> distinctWords = new HashSet<>(words);
 
-
         return distinctWords.stream()
-                .map(word -> new WordInfo(word, frequency(asList(words), word)))
+                .map(word -> new WordInfo(word, frequency(words, word)))
                 .collect(toList());
     }
 }
