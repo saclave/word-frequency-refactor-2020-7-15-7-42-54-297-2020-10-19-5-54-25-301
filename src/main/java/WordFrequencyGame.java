@@ -9,10 +9,6 @@ import static java.util.stream.Collectors.toList;
 public class WordFrequencyGame {
     public String getResult(String inputStr){
             try {
-                if ("".equals(inputStr)) {
-                    throw new RuntimeException();
-                }
-
                 List<WordInfo> wordInfoList = calculateWordFrequency(inputStr);
                 sortWordInfo(wordInfoList);
                 return joinWordInfoList(wordInfoList);
@@ -33,7 +29,7 @@ public class WordFrequencyGame {
     }
 
     private List<WordInfo> calculateWordFrequency(String inputStr) {
-        List<String> words = asList(inputStr.split("\\s"));
+        List<String> words = asList(inputStr.split("\\s+"));
         HashSet<String> distinctWords = new HashSet<>(words);
 
         return distinctWords.stream()
